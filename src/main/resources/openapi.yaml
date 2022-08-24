@@ -1,0 +1,41 @@
+
+# CMS OpenAPI
+
+openapi: 3.0.3
+info:
+  title: OpenAPI Specification For CMS
+  version: '1.2'
+  
+externalDocs:
+  description: More Info About CMS API
+  url: http://localhost:8098/customers/customerData
+  
+servers:
+  - url: http://localhost:8098/customers/customerData
+    variables:
+      port:
+        enum:
+         - '8098'
+        default: !!str 8098
+        
+tags:
+ - name: customer
+   description: Operations About the Customer
+
+paths:
+  /customers:
+    summary: Operations About the Customer
+    get:
+      tags:
+        - customer
+      summary: Get Customer Data
+      response:
+        200:
+          description: Success
+        400:
+          description: In-Correct API
+        defalut:
+          description: Success
+          
+  
+

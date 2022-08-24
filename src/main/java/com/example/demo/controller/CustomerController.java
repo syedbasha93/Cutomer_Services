@@ -16,7 +16,6 @@ public class CustomerController {
     @PostMapping(path = "/customerData",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Object> intiatePaymentTranscation( @Valid @RequestBody CustomerDetails customerDetails) throws CustomException {
-        try {
             CustomerDetails customerDetail =new CustomerDetails();;
             if (customerDetails != null) {
                 customerDetail.setCustomerNumber(customerDetails.getCustomerNumber());
@@ -28,10 +27,6 @@ public class CustomerController {
                 customerDetail.setMobileNumber(customerDetails.getMobileNumber());
             }
             return new ResponseEntity<>(customerDetail, HttpStatus.OK);
-        } catch (CustomException e) {
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        }
-
     }
 
 }
