@@ -1,41 +1,91 @@
-
-# CMS OpenAPI
-
-openapi: 3.0.3
+openapi: 3.0.2
 info:
-  title: OpenAPI Specification For CMS
-  version: '1.2'
-  
-externalDocs:
-  description: More Info About CMS API
-  url: http://localhost:8098/customers/customerData
-  
+  title: Customer Demo Application
+  version: 1.0.1
+  description: "Using Customer Data performing operations"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: Syed.Basha@gmail.com
 servers:
-  - url: http://localhost:8098/customers/customerData
-    variables:
-      port:
-        enum:
-         - '8098'
-        default: !!str 8098
-        
+ - url: http://localhost:8098/
 tags:
- - name: customer
-   description: Operations About the Customer
-
+- name: Customers
+  description: Operations about Customers
+  externalDocs:
+    description: Below are the operat
+    url: http://localhost:8098
 paths:
-  /customers:
-    summary: Operations About the Customer
-    get:
+  /customers/customerData:
+    post:
       tags:
-        - customer
-      summary: Get Customer Data
-      response:
-        200:
-          description: Success
-        400:
-          description: In-Correct API
-        defalut:
-          description: Success
-          
-  
-
+      - Customer
+      summary: Create Customer
+      description: Create user functionality
+      operationId: createCustomer
+      requestBody:
+        description: Created Customer object
+        content:
+          'application/json':            
+           schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+      x-codegen-request-body-name: body
+  /oauth/token:
+    post:
+      tags:
+      - JWT Token Generator
+      summary: gene Jwt token
+      description: genearte jwt token
+      operationId: createJwttoken
+      requestBody:
+        description: Created Customer object
+        content:
+          'application/json':            
+           schema:
+              $ref: '#/components/schemas/jwtRequest'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        customerNumber:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthDate:
+          type: string
+          example: Date(YYYY-MM-YY)
+        country:
+          type: string
+        countryCode:
+          type: string
+          example: IN
+        mobileNumber:
+          type: string
+    jwtRequest: 
+          type: object
+          properties:
+           username:
+            type: string
+            example: "syed"
+           password:
+            type: string
+            example: "password"
+            
+  securitySchemes:
+    JWT_Authentication:
+      type: apiKey
+      name: Authorization
+      in: header
